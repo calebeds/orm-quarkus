@@ -9,6 +9,8 @@ import javax.persistence.Id;
 @Entity
 public class Customer {
 
+    //Aqui usamos JPA
+
     @Id
     @GeneratedValue
     private long id;

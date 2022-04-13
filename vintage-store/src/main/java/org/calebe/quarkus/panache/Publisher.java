@@ -1,16 +1,24 @@
 package org.calebe.quarkus.panache;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import java.time.Instant;
 
-@Path("/hello")
-public class Publisher {
+import javax.persistence.Entity;
 
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String hello() {
-        return "Hello RESTEasy";
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
+
+@Entity
+public class Publisher extends PanacheEntity { //Interesting that the attributes can be public
+    //Aqui usamos panache
+    public String name;
+    public Instant createdDate = Instant.now();
+
+    public Publisher() {
+
     }
+
+    public Publisher(String name) {
+        this.name = name;
+    }
+
+   
 }

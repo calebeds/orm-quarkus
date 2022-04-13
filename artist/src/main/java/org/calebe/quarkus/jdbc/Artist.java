@@ -3,6 +3,7 @@ package org.calebe.quarkus.jdbc;
 import java.time.Instant;
 
 public class Artist {
+    //Aqui usamos POJO Plain Old Java Object
     private long id;
     private String name;
     private String bio;
