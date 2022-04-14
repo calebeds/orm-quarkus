@@ -6,7 +6,6 @@
     <groupId>org.calebe.course.quarkus.orm</groupId>
     <artifactId>parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
   <groupId>org.calebe.course.quarkus.orm</groupId>
   <artifactId>vintage-store</artifactId>
@@ -42,6 +41,17 @@
         <exclusion>
           <groupId>io.quarkus</groupId>
           <artifactId>quarkus-jdbc-mysql</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.calebe.course.quarkus.orm</groupId>
+      <artifactId>customer</artifactId>
+      <version>1.0.0-SNAPSHOT</version> 
+      <exclusions>
+        <exclusion>
+          <groupId>io.quarkus</groupId>
+          <artifactId>quarkus-jdbc-mariadb</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
