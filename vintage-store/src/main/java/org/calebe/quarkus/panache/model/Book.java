@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Book extends Item {
@@ -19,4 +21,7 @@ public class Book extends Item {
     @Column(length = 20)
     @Enumerated(EnumType.STRING)
     public Language language;
+    @ManyToOne
+    @JoinColumn(name = "publisher_fk")
+    public Publisher publisher;
 }

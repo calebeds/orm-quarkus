@@ -7,7 +7,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.calebe.quarkus.jdbc.Artist;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
@@ -25,4 +29,8 @@ public class Item extends PanacheEntity{
     public BigDecimal price;
     @Column(name = "created_date", nullable = false)
     public Instant createdDate = Instant.now();
+    //A chave estrangeira estará na própria nesta table ao fazer o Join, como serão muitas dessa classe, poderá haver um id de artistas para várias rows de items por exemplo
+    @ManyToOne
+    @JoinColumn(name = "artist_fk")//É Coluna do Join so to speak. O método permanece o mesmo, o que muda é o nome da coluna que antes era artist_id. Apenas explicita que é uma chave estrangeira. No Jointable as chaves ficariam em outra table para realizar o JOin. SErá que é assim que funciona o manytomany? 
+    public Artist artist;
 }
