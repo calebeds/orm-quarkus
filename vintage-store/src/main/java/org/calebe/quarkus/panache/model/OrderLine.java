@@ -2,6 +2,7 @@ package org.calebe.quarkus.panache.model;
 
 import java.time.Instant;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -11,7 +12,7 @@ import javax.persistence.Table;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
 @Entity
-@Table(name = "t_purchase_order_line")
+@Table(name = "t_purchase_order_lines")
 public class OrderLine extends PanacheEntity {
     
     @ManyToOne
@@ -19,6 +20,7 @@ public class OrderLine extends PanacheEntity {
     public Item item;
     @Column(nullable = false)
     public Integer quantity;
+    @JsonbTransient
     @ManyToOne
     @JoinColumn(name = "purchase_order_fk")
     public PurchaseOrder purchaseOrder;

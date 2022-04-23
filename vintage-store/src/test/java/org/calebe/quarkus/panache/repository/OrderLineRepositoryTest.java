@@ -1,6 +1,8 @@
 package org.calebe.quarkus.panache.repository;
 
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.math.BigDecimal;
 import java.sql.SQLException;
 
@@ -12,14 +14,13 @@ import org.calebe.quarkus.panache.model.Book;
 import org.calebe.quarkus.panache.model.Language;
 import org.calebe.quarkus.panache.model.OrderLine;
 import org.calebe.quarkus.panache.model.Publisher;
-import org.calebe.quarkus.panache.model.PurchaseOrder;
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.TestTransaction;
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
-public class PurchaseOrderRepositoryTest {
+public class OrderLineRepositoryTest {
 
     @Inject
     CustomerRepository customerRepository;
@@ -30,7 +31,7 @@ public class PurchaseOrderRepositoryTest {
 
     @Test
     @TestTransaction
-    public void shouldCreateAndFindAPurchaseOrder() throws SQLException {
+    public void shouldCreateAndFindAOrderLine() throws SQLException {
         //Creates an Artist
         Artist artist = new Artist("artist name", "artist bio");
         
@@ -59,12 +60,9 @@ public class PurchaseOrderRepositoryTest {
         orderLine.item = book;
         orderLine.quantity = 2;
 
-        //Creates a Purchase Order
-        PurchaseOrder purchaseOrder = new PurchaseOrder();
-        purchaseOrder.customer = customer;
-        purchaseOrder.addOrderLine(orderLine);
+        OrderLine.persist(orderLine);
 
-        PurchaseOrder.persist(purchaseOrder);
+        assertNotNull(orderLine.id);//Id created automatically
 
 
     }

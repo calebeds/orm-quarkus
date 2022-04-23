@@ -1,42 +1,45 @@
 package org.calebe.quarkus.panache.repository;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.math.BigDecimal;
-import java.sql.SQLException;
 
 import javax.inject.Inject;
 
 import org.calebe.quarkus.jdbc.Artist;
-import org.calebe.quarkus.jpa.Customer;
 import org.calebe.quarkus.panache.model.Book;
 import org.calebe.quarkus.panache.model.Language;
-import org.calebe.quarkus.panache.model.OrderLine;
 import org.calebe.quarkus.panache.model.Publisher;
-import org.calebe.quarkus.panache.model.PurchaseOrder;
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.TestTransaction;
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
-public class PurchaseOrderRepositoryTest {
-
-    @Inject
-    CustomerRepository customerRepository;
+public class BookRepositoryTest {
 
     @Inject
     ArtistRepository artistRepository;
 
-
     @Test
     @TestTransaction
-    public void shouldCreateAndFindAPurchaseOrder() throws SQLException {
+    public void shouldCreateAndFindABook()  {
+        
+        long count = Book.count();//Uses the method count from Book to count all the books
+        int listAllSize =  Book.listAll().size();//Here uses the method listAll and the size of the list to get the count
+        assertEquals(count, listAllSize);//Test
+
         //Creates an Artist
-        Artist artist = new Artist("artist name", "artist bio");
+        artistRepository.count();
+        Artist artist = new Artist("artist random name", "artist random bio");
+        artistRepository.persist(artist);
         
         //Creates a Publisher
         Publisher publisher = new Publisher("publisher name");//Why there was no need to persist publisher or artist before? Didn't underdant that
-        //Creates a Book
+        publisher.persist();//Não estava contando os livros, por isso persisti o publisher
+
+
         Book book = new Book();
         book.title = "title of the book";
         book.nbOfPages = 500;
@@ -48,25 +51,13 @@ public class PurchaseOrderRepositoryTest {
         book.publisher = publisher;
         book.artist = artist;
 
-        Book.persist(book);
+        Book.persist(book); //Here the book got added
+        assertNotNull(book.id);//An id was created
 
-        //Creates a customer
-        Customer customer = new Customer("customer first name", "customer last name", "customer email");
-        customerRepository.persist(customer);
+        assertEquals(count + 1, Book.count());//1 Book added
 
-        //Creates an order line
-        OrderLine orderLine = new OrderLine();
-        orderLine.item = book;
-        orderLine.quantity = 2;
-
-        //Creates a Purchase Order
-        PurchaseOrder purchaseOrder = new PurchaseOrder();
-        purchaseOrder.customer = customer;
-        purchaseOrder.addOrderLine(orderLine);
-
-        PurchaseOrder.persist(purchaseOrder);
-
-
+        Book book2 = Book.findById(book.id);
+        assertNotNull(book2);
     }
 
     

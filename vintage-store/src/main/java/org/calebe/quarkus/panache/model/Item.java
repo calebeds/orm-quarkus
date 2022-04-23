@@ -17,7 +17,7 @@ import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
 @Entity
 @Table(name = "t_items") //So here we see a way of creating a super class and a bd
-@Inheritance(strategy = InheritanceType.JOINED)//Inheritance type
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)//Inheritance type
 public class Item extends PanacheEntity{
 
     //Os métodos serem públicos is kind of weird haha
